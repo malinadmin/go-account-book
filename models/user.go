@@ -10,7 +10,7 @@ import (
 type User struct {
 	gorm.Model        //使用此内置参数删除时会使用软删除方式
 	Username   string `gorm:"unique;not null" json:"username" form:"username" ` //username为唯一值并且不能为空
-	Password   int64  `gorm:"not null" json:"password" form:"password"`
+	Password   string `gorm:"not null" json:"password" form:"password"`
 	Sign       string `json:"sign" form:"sign"`
 	Avatr      string `json:"avatr" form:"avatr"`
 }
@@ -33,16 +33,16 @@ func IsCheckUser(username string) (err error) {
 }
 
 // 登录
-func Login(username string, password int64) (user *User, err error) {
+func Login(username string, password string) (user *User, err error) {
 	user = new(User)
-	if err = dao.DB.Where(map[string]interface{}{"username": username, "password": password}).First(user).Error; err != nil {
+	if err = dao.DB.Where("username = ? AND password = ?", username, password).First(user).Error; err != nil {
 		return nil, err
 	}
 	return
 }
 
 // 修改密码
-func UpdatePassword(username string, password int64) (err error) {
+func UpdatePassword(username string, password string) (err error) {
 	var user User
 	err = dao.DB.Model(&user).Where("username = ?", username).Update("password", password).Error
 	return

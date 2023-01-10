@@ -42,9 +42,11 @@ func GetBillList(c *gin.Context) {
 	}
 	//获取总条数
 	c.JSON(http.StatusOK, gin.H{"code": 200, "msg": "请求成功", "data": map[string]interface{}{
-		"data":     list,
+		"list":     list,
 		"total":    total,
 		"page":     page,
 		"pageSize": pageSize,
+		"expense":  0,
+		"income":   0,
 	}})
 }

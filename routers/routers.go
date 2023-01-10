@@ -11,6 +11,7 @@ func SetRouters() *gin.Engine {
 
 	//初始化路由
 	r := gin.Default()
+	r.Use(middleware.Cors()) //开启中间件 允许使用跨域请求
 	r.GET("/", func(c *gin.Context) {
 		c.JSON(200, gin.H{
 			"message": "welcomeGo",

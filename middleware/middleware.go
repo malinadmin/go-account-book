@@ -17,7 +17,7 @@ func AuthMiddleware() gin.HandlerFunc {
 
 		if tokenString == "" || !strings.HasPrefix(tokenString, "Bearer") {
 			c.JSON(http.StatusOK, gin.H{
-				"code": 500,
+				"code": 401,
 				"msg":  "获取token失败",
 			})
 			c.Abort()
@@ -29,7 +29,7 @@ func AuthMiddleware() gin.HandlerFunc {
 		token, claims, err := utils.ParseToken(tokenString)
 		if err != nil || !token.Valid {
 			c.JSON(http.StatusOK, gin.H{
-				"code":    500,
+				"code":    401,
 				"message": "token错误",
 			})
 			c.Abort()
@@ -44,7 +44,7 @@ func AuthMiddleware() gin.HandlerFunc {
 		// 如果没有找到
 		if user.ID == 0 {
 			c.JSON(http.StatusOK, gin.H{
-				"code":    500,
+				"code":    401,
 				"message": "token不存在",
 			})
 			c.Abort()

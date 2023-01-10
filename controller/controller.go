@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/jinzhu/copier"
 )
 
 // 注册
@@ -22,9 +23,15 @@ func Register(c *gin.Context) {
 
 }
 
+type UserInfo struct {
+	models.User
+	Token string `json:"token"`
+}
+
 // 登录
 func Login(c *gin.Context) {
 	var user models.User
+	var user_info UserInfo
 	c.ShouldBind(&user)
 	users, err := models.Login(user.Username, user.Password)
 	if err != nil {
@@ -33,7 +40,9 @@ func Login(c *gin.Context) {
 	}
 	//使用jwt生成token
 	token, _ := utils.ReleaseToken(user.Username)
-	c.JSON(http.StatusOK, gin.H{"code": 200, "msg": "登录成功", "data": users, "token": token})
+	copier.Copy(&user_info, &users)
+	user_info.Token = token
+	c.JSON(http.StatusOK, gin.H{"code": 200, "msg": "登录成功", "data": user_info})
 }
 
 // 修改密码
