@@ -10,7 +10,7 @@ import (
 type User struct {
 	gorm.Model        //使用此内置参数删除时会使用软删除方式
 	Username   string `gorm:"unique;not null" json:"username" form:"username" ` //username为唯一值并且不能为空
-	Password   int64  `gorm:"unique;not null" json:"password" form:"password"`
+	Password   int64  `gorm:"not null" json:"password" form:"password"`
 	Sign       string `json:"sign" form:"sign"`
 	Avatr      string `json:"avatr" form:"avatr"`
 }

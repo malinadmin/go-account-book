@@ -27,20 +27,20 @@ func CreateBill(c *gin.Context) {
 
 // 查询账单
 func GetBillList(c *gin.Context) {
-	var total int
 
 	page, _ := strconv.Atoi(c.DefaultQuery("page", c.Query("page")))
-	pageSize, _ := strconv.Atoi(c.DefaultQuery("pageSize", c.Query("pageSize")))
-	offset := (page - 1) * pageSize
+	pageSize, _ := strconv.Atoi(c.DefaultQuery("pageSize", c.Query("page_size")))
 
 	//从请求中拿出数据
 	user, _ := c.MustGet("user").(models.User)
 	group_type := c.Query("group_type") //类型1收入 2支出
-	list, err := models.GetBillList(user.ID, group_type, pageSize, offset)
+	type_name := c.Query("type_name")
+	total, list, err := models.GetBillList(user.ID, group_type, type_name, page, pageSize)
 	if err != nil {
 		c.JSON(http.StatusOK, gin.H{"code": 500, "msg": err.Error()})
 		return
 	}
+	//获取总条数
 	c.JSON(http.StatusOK, gin.H{"code": 200, "msg": "请求成功", "data": map[string]interface{}{
 		"data":     list,
 		"total":    total,

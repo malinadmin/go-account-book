@@ -35,6 +35,7 @@ func AuthMiddleware() gin.HandlerFunc {
 			c.Abort()
 			return
 		}
+
 		username := claims.Username
 		db := dao.DB
 		var user models.User
