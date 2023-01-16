@@ -25,6 +25,12 @@ func CreateBill(c *gin.Context) {
 
 }
 
+// 定义账单返回列表type
+type BillList struct {
+	Time string
+	List []models.Bill
+}
+
 // 查询账单
 func GetBillList(c *gin.Context) {
 

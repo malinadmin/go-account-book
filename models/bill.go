@@ -8,15 +8,15 @@ import (
 
 // 定义账单表模型
 type Bill struct {
-	ID        uint `gorm:"primarykey"`
-	CreatedAt time.Time
-	UpdatedAt time.Time
-	Amount    int64  `gorm:"not null" json:"amount" form:"amount"`
-	TypeId    int64  `gorm:"not null" json:"type_id" form:"type_id"`
-	TypeName  string `gorm:"not null" json:"type_name" form:"type_name"`
-	GroupType int64  `gorm:"not null" json:"group_type" form:"group_type"` //分类type1为支出 2为收入
-	Remark    string `json:"remark" form:"remark"`
-	UserId    uint   `gorm:"not null" json:"user_id" form:"user_id"`
+	ID        uint      `gorm:"primarykey" json:"id"`
+	CreatedAt time.Time `json:"created_at" form:"created_at"`
+	UpdatedAt time.Time `json:"updated_at" form:"updated_at"`
+	Amount    int64     `gorm:"not null" json:"amount" form:"amount"`
+	TypeId    int64     `gorm:"not null" json:"type_id" form:"type_id"`
+	TypeName  string    `gorm:"not null" json:"type_name" form:"type_name"`
+	GroupType int64     `gorm:"not null" json:"group_type" form:"group_type"` //分类type1为支出 2为收入
+	Remark    string    `json:"remark" form:"remark"`
+	UserId    uint      `gorm:"not null" json:"user_id" form:"user_id"`
 }
 
 // 创建账单表

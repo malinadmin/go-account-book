@@ -32,6 +32,7 @@ func SetRouters() *gin.Engine {
 
 	{
 		typeGrop.POST("/create", middleware.AuthMiddleware(), controller.CreateGroup)
+		typeGrop.GET("/list", middleware.AuthMiddleware(), controller.GetAllGroup)
 	}
 
 	//bill
